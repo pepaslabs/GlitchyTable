@@ -67,6 +67,8 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 }
 ```
 
+(For more context, see the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/2%20Buggy%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/2%20Buggy%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
+
 This change is enough to solve the laggy scrolling performance (as seen in this [video](http://gfycat.com/OnlyAmusingCardinal)):
 
 [![gif 1](http://zippy.gfycat.com/OnlyAmusingCardinal.gif)](http://gfycat.com/OnlyAmusingCardinal)
@@ -79,12 +81,66 @@ To demonstrate this, we increase the simulated lag in `GlitchyModel` to 1000ms a
 
 [![gif 1](http://zippy.gfycat.com/PleasedConfusedBluejay.gif)](http://gfycat.com/PleasedConfusedBluejay)
 
+## Fixing the Queued `UITableViewCell` Population Bug
 
-(draft: including gifs inline)
+To solve this problem, we need to ensure that multiple populate operations aren't allowed to queue up.  We can accomplish this by using a serial queue to manage our `UITableViewCell` populate operations, and ensuring that any outstanding operations are cancelled before we queue up the next operation.
 
+We create a trivial serial queue:
 
+```Swift
+class SerialOperationQueue: NSOperationQueue
+{
+    override init()
+    {
+        super.init()
+        maxConcurrentOperationCount = 1
+    }
+}
+```
 
+We then add such a queue to each of our `UITableViewCell` instances:
+
+```Swift
+class GlitchyTableCell: UITableViewCell
+{
+    let queue = SerialOperationQueue()
+}
+```
+
+Finally, we update our `_configureCell` implementation to use the operation queue:
+
+```Swift
+private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSIndexPath)
+{
+    cell.queue.cancelAllOperations()
+    
+    let operation: NSBlockOperation = NSBlockOperation()
+    operation.addExecutionBlock { [weak operation] () -> Void in
+        
+        let text = self.model.textForIndexPath(indexPath)
+        
+        dispatch_sync(dispatch_get_main_queue(), { [weak operation] () -> Void in
+            
+            if let operation = operation where operation.cancelled { return }
+            
+            cell.textLabel?.text = text
+        })
+    }
+    
+    cell.queue.addOperation(operation)
+}
+```
+
+(For more context, see the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/3%20Correct%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/3%20Correct%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
+
+Now, we revisit our extremely problematic model (which simulates 1000ms lag) and verify that it behaves correctly (as seen in this [video](http://gfycat.com/LameComfortableGordonsetter)):
 
 [![gif 1](http://zippy.gfycat.com/LameComfortableGordonsetter.gif)](http://gfycat.com/LameComfortableGordonsetter)
 
+Finally, we dial back the simulated lag to 100ms to get a sense of what this would look like in a real-world scenario (as seen in this [video](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)):
+
 [![gif 1](http://zippy.gfycat.com/HeavyEmbellishedIceblueredtopzebra.gif)](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)
+
+## Conclusion
+
+Populating `UITableViewCells` asynchronously ensures that your `UITableView` scrolling performance is decoupled from your data model performance.
