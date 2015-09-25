@@ -9,7 +9,7 @@ However, sometimes it is simply not possible to marshall all of the data needed 
 
 ## Demonstrating the problem
 
-[Here](https://github.com/pepaslabs/GlitchyTable/blob/master/1%20The%20Problem/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) is a simple Xcode project which demonstrates the problem of a slow model leading to laggy scrolling performance.
+[Here](https://github.com/pepaslabs/GlitchyTable/tree/master/1%20The%20Problem/GlitchyTable) is a simple Xcode project which demonstrates the problem of a slow model leading to laggy scrolling performance.
 
 We start with a model which blocks for 100ms.  This simulates the lag induced excessive disk access, complex `CoreData` interactions, etc:
 
