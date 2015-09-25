@@ -4,7 +4,7 @@
 
 In general, the key to keeping the iPhone UI responsive is to avoid block the main thread for an extended period of time.  In the case of `UITableView`, this boils down to keeping `tableView(_:cellForRowAtIndexPath:)` as responsive as possible.
 
-However, sometimes it is simply not possible to marshall all of the data needed to fully populate a complex `UITableViewCell` without causing a drop in framerate.  In these cases, it is necessary to switch to an asynchronous strategy for populating `UITableViewCells`.  In this article we explore a trivial example of using this technique.
+However, sometimes it is simply not possible to marshall all of the data needed to populate a complex `UITableViewCell` without causing a drop in framerate.  In these cases, it is necessary to switch to an asynchronous strategy for populating `UITableViewCells`.  In this article we explore a trivial example of using this technique.
 
 ## Demonstrating the Problem
 
