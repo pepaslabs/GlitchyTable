@@ -73,7 +73,9 @@ This change is enough to solve the laggy scrolling performance (as seen in this 
 
 However, we have introduced a bug.  If a `UITableViewCell` scrolls all the way off-screen and gets re-used before the first asynchronous `_configureCell` call has completed, a second `_configureCell` call will be queued up in the distpatch queue.
 
-In the case where you have both an extremely laggy model and a user whom is scrolling very aggressively, this can result in many such calls getting queued up.  The result is that when the `UITableView` stops scrolling, the user will the content of the cells cycle through all of the queued up populate operations, as seen in this [video](http://gfycat.com/PleasedConfusedBluejay):
+In the case where you have both an extremely laggy model and a user whom is scrolling very aggressively, this can result in many such calls getting queued up.  The result is that when the `UITableView` stops scrolling, the user will see the content of the cells cycle through all of the queued up populate operations.
+
+To demonstrate this, we increase the simulated lag in `GlitchyModel` to 1000ms and scroll very quickly, as seen in this [video](http://gfycat.com/PleasedConfusedBluejay):
 
 [![gif 1](http://zippy.gfycat.com/PleasedConfusedBluejay.gif)](http://gfycat.com/PleasedConfusedBluejay)
 
