@@ -50,7 +50,7 @@ The result is a `UITableView` with terrible scrolling performance, as shown in t
 
 ## Populating `UITableViewCell` Asynchronously
 
-Our first attempt at solving this problem is to rewrite `_configureCell(_,atIndexPath)` to grab the data from the model on a background thread, then jump back to the main thread to populate the `UITableViewCell`:
+Our first attempt at solving this problem is to rewrite `_configureCell(_,atIndexPath)` such that it dispatches to a background thread to grab the data from the model, then jumps back to the main thread to populate the `UITableViewCell`:
 
 ```Swift
 private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSIndexPath)
