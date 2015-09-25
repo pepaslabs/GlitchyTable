@@ -41,7 +41,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 }
 ```
 
-For context, the full source of the implementation is available [here](https://github.com/pepaslabs/GlitchyTable/blob/master/1%20The%20Problem/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift).
+(For additional context, the full source of the implementation is available [here](https://github.com/pepaslabs/GlitchyTable/blob/master/1%20The%20Problem/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift).)
 
 The result is a `UITableView` with terrible scrolling performance, as shown in this [video](http://gfycat.com/ImpassionedBoilingCoyote):
 
