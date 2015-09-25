@@ -46,7 +46,7 @@ The result is a `UITableView` with terrible scrolling performance, as shown in t
 
 [![gif 1](http://zippy.gfycat.com/ImpassionedBoilingCoyote.gif)](http://gfycat.com/ImpassionedBoilingCoyote)
 
-(Note: It is difficult to demonstrate the problem in the above in-line gif due to its low framerate.  Please click the gif or follow the [video link](http://gfycat.com/ImpassionedBoilingCoyote) to see an HTML5 video, full framerate demonstration of the problem).
+(Note: It is difficult to demonstrate the problem in the above in-line gif due to its low framerate.  Please click the gif or follow the [video link](http://gfycat.com/ImpassionedBoilingCoyote) to see a full framerate HTML5 video demonstration of the problem.)
 
 ## Populating `UITableViewCell` Asynchronously
 
