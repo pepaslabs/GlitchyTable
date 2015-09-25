@@ -142,6 +142,8 @@ Finally, we dial back the simulated lag to 100ms to get a sense of what this wou
 
 [![gif 1](http://zippy.gfycat.com/HeavyEmbellishedIceblueredtopzebra.gif)](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)
 
+The result is a `UITableView` UX which is tollerant of 100ms of data model lag.
+
 ## Conclusion
 
 Populating `UITableViewCells` asynchronously ensures that your `UITableView` scrolling performance is decoupled from your data model performance.
