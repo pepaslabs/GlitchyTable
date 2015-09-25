@@ -9,7 +9,7 @@ However, sometimes it is simply not possible to marshall all of the data needed 
 
 ## Demonstrating the Problem
 
-[Here](https://github.com/pepaslabs/GlitchyTable/tree/master/1%20The%20Problem/GlitchyTable) is a simple Xcode project which demonstrates the problem of a slow model leading to laggy scrolling performance.
+Our first task is to create a simple Xcode project which demonstrates the problem of a slow model leading to laggy scrolling performance.
 
 We start with a model which blocks for 100ms.  This simulates the lag induced by excessive disk access, complex `CoreData` interactions, etc:
 
@@ -41,7 +41,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 }
 ```
 
-(For additional context, the full source of the implementation is available [here](https://github.com/pepaslabs/GlitchyTable/blob/master/1%20The%20Problem/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift).)
+(For additional context, see the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/1%20The%20Problem/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/1%20The%20Problem/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
 
 The result is a `UITableView` with terrible scrolling performance, as shown in this [video](http://gfycat.com/ImpassionedBoilingCoyote):
 
@@ -69,7 +69,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 }
 ```
 
-(For more context, see the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/2%20Buggy%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/2%20Buggy%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
+(See also the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/2%20Buggy%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/2%20Buggy%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
 
 This change is enough to solve the laggy scrolling performance (as seen in this [video](http://gfycat.com/OnlyAmusingCardinal)):
 
@@ -133,7 +133,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 }
 ```
 
-(For more context, see the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/3%20Correct%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/3%20Correct%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
+(See also the [Xcode project](https://github.com/pepaslabs/GlitchyTable/tree/master/3%20Correct%20Solution/GlitchyTable) and [source code](https://github.com/pepaslabs/GlitchyTable/blob/master/3%20Correct%20Solution/GlitchyTable/GlitchyTable/GlitchyTableViewController.swift) of this solution).
 
 Now, we revisit our extremely problematic model (which simulates 1000ms lag) and verify that it behaves correctly (as seen in this [video](http://gfycat.com/LameComfortableGordonsetter)):
 
