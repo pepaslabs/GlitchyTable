@@ -1,5 +1,4 @@
-# GlitchyTable
-An exploration of improving `UITableView` scrolling performance by using an asynchronous `UITableViewCell` population technique.
+# Populating `UITableViewCells` Asynchronously to Maintain Scolling Performance
 
 ## Abstract
 
