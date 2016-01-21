@@ -44,7 +44,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 
 The result is a `UITableView` with terrible scrolling performance, as shown in this [video](http://gfycat.com/ImpassionedBoilingCoyote):
 
-[![gif 1](http://zippy.gfycat.com/ImpassionedBoilingCoyote.gif)](http://gfycat.com/ImpassionedBoilingCoyote)
+[![gif 1](https://raw.githubusercontent.com/pepaslabs/GlitchyTable/master/1%20The%20Problem/1_laggy_table.gif)](http://gfycat.com/ImpassionedBoilingCoyote)
 
 (Note: It is difficult to demonstrate the problem in the above in-line gif due to its low framerate.  Please click the gif or follow the [video link](http://gfycat.com/ImpassionedBoilingCoyote) to see a full framerate HTML5 video demonstration of the problem.)
 
@@ -72,7 +72,7 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 
 This change is enough to solve the laggy scrolling performance (as seen in this [video](http://gfycat.com/OnlyAmusingCardinal)):
 
-[![gif 1](http://zippy.gfycat.com/OnlyAmusingCardinal.gif)](http://gfycat.com/OnlyAmusingCardinal)
+[![gif 2](https://github.com/pepaslabs/GlitchyTable/blob/master/2%20Buggy%20Solution/2_smooth_scrolling.gif)](http://gfycat.com/OnlyAmusingCardinal)
 
 However, we have introduced a bug.  If a `UITableViewCell` scrolls all the way off-screen and gets re-used before the first asynchronous `_configureCell` call has completed, a second `_configureCell` call will be queued up in the distpatch queue.
 
@@ -80,7 +80,7 @@ In the case where you have both an extremely laggy model and a user whom is scro
 
 To demonstrate this, we increase the simulated lag in `GlitchyModel` to 1000ms and scroll very quickly, as seen in this [video](http://gfycat.com/PleasedConfusedBluejay):
 
-[![gif 1](http://zippy.gfycat.com/PleasedConfusedBluejay.gif)](http://gfycat.com/PleasedConfusedBluejay)
+[![gif 3](https://raw.githubusercontent.com/pepaslabs/GlitchyTable/master/2%20Buggy%20Solution/3_queued_cell_population_bug.gif)](http://gfycat.com/PleasedConfusedBluejay)
 
 ## Fixing the Queued `UITableViewCell` Population Bug
 
@@ -136,11 +136,11 @@ private func _configureCell(cell: GlitchyTableCell, atIndexPath indexPath: NSInd
 
 Now, we revisit our extremely problematic model (which simulates 1000ms lag) and verify that it behaves correctly (as seen in this [video](http://gfycat.com/LameComfortableGordonsetter)):
 
-[![gif 1](http://zippy.gfycat.com/LameComfortableGordonsetter.gif)](http://gfycat.com/LameComfortableGordonsetter)
+[![gif 4](https://raw.githubusercontent.com/pepaslabs/GlitchyTable/master/3%20Correct%20Solution/4_correct_lots_of_lag.gif)](http://gfycat.com/LameComfortableGordonsetter)
 
 Finally, we dial back the simulated lag to 100ms to get a sense of what this would look like in a real-world scenario (as seen in this [video](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)):
 
-[![gif 1](http://zippy.gfycat.com/HeavyEmbellishedIceblueredtopzebra.gif)](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)
+[![gif 5](https://raw.githubusercontent.com/pepaslabs/GlitchyTable/master/3%20Correct%20Solution/5_correct_small_lag.gif)](http://gfycat.com/HeavyEmbellishedIceblueredtopzebra)
 
 The result is a `UITableView` UX which is tollerant of 100ms of data model lag.
 
