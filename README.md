@@ -1,4 +1,4 @@
-# Populating `UITableViewCells` Asynchronously to Maintain Scolling Performance
+# Populating `UITableViewCells` Asynchronously to Maintain Scrolling Performance
 
 ## Abstract
 
